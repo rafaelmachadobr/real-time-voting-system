@@ -1,5 +1,7 @@
 import cookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUI from "@fastify/swagger-ui";
 import websocket from "@fastify/websocket";
 import fastify from "fastify";
 import { createPoll } from "./routes/create-poll";
@@ -11,6 +13,22 @@ const app = fastify();
 
 app.register(fastifyCors, {
   origin: "*",
+});
+
+app.register(fastifySwagger, {
+  swagger: {
+    consumes: ["application/json"],
+    produces: ["application/json"],
+    info: {
+      title: "Realtime Voting System",
+      description: "API for the Realtime Voting System",
+      version: "1.0.0",
+    },
+  },
+});
+
+app.register(fastifySwaggerUI, {
+  routePrefix: "/docs",
 });
 
 app.register(cookie, {
